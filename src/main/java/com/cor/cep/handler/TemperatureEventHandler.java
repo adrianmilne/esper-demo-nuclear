@@ -2,6 +2,7 @@ package com.cor.cep.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cor.cep.event.TemperatureEvent;
@@ -17,7 +18,7 @@ import com.espertech.esper.client.EPStatement;
  * This class handles incoming Temperature Events. It processes them through the EPService, to which
  * it has attached the 3 queries.
  */
-public class TemperatureEventHandler {
+public class TemperatureEventHandler implements InitializingBean {
 
     /** Logger */
     private static Logger LOG = LoggerFactory.getLogger(TemperatureEventHandler.class);
@@ -34,16 +35,25 @@ public class TemperatureEventHandler {
      */
     private static final String CRITICAL_EVENT_MULTIPLIER = "1.5";
 
-    /** Esper service */
+    /** Esper service. */
     private EPServiceProvider epService;
+    
+    /** Contains the Esper Query Language statement for listening for critical events. */
     private EPStatement criticalEventStatement;
+    /** Contains the Esper Query Language statement for listening for warning events. */
     private EPStatement warningEventStatement;
+    /** Contains the Esper Query Language statement for listening for monitor events. */
     private EPStatement monitorEventStatement;
 
+    /** Listener which executes when a the criticalEventStatement detects a match. */
     @Autowired
     private TemperatureCriticalEventListener criticalEventListener;
+    
+    /** Listener which executes when a the warningEventStatement detects a match. */
     @Autowired
     private TemperatureWarningEventListener warningEventListener;
+    
+    /** Listener which executes when a the monitorEventStatement detects a match. */
     @Autowired
     private TemperatureMonitorEventListener monitorEventListener;
 
@@ -53,6 +63,8 @@ public class TemperatureEventHandler {
     public void initService() {
 
         Configuration config = new Configuration();
+        
+        // Recognise domain objects in this package in Esper EQL statements.
         config.addEventTypeAutoName("com.cor.cep.event");
         epService = EPServiceProviderManager.getDefaultProvider(config);
 
@@ -107,7 +119,7 @@ public class TemperatureEventHandler {
      */
     private void createTemperatureMonitorExpression() {
 
-        // Example of simple EPL with a Time Window
+        // Example of simple EPL with a Time Window of 10 seconds
         String monitorEventExpression = "select avg(value) as avg_val from TemperatureEvent.win:time_batch(10 sec)";
         monitorEventStatement = epService.getEPAdministrator().createEPL(monitorEventExpression);
         monitorEventStatement.addListener(monitorEventListener);
@@ -120,11 +132,15 @@ public class TemperatureEventHandler {
 
         LOG.debug(event.toString());
 
-        if (epService == null) {
-            initService();
-        }
-
         epService.getEPRuntime().sendEvent(event);
 
+    }
+
+    /**
+     * Auto initialise our service after Spring bean wiring is complete.
+     */
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        initService();
     }
 }
