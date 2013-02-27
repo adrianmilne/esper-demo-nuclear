@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="
-http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jms="http://www.springframework.org/schema/jms"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<bean
-		class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+	<!-- Process Spring Annotations -->
+	<context:component-scan base-package="com.cor.cep" />
 
 	<bean id="eventGenerator"
 		class="com.cor.cep.util.RandomTemperatureEventGenerator" />
 
-	<bean id="criticalEventListener" class="com.cor.cep.listener.TemperatureCriticalEventListener" />
-
-	<bean id="warningEventListener" class="com.cor.cep.listener.TemperatureWarningEventListener" />
-
-	<bean id="monitorEventListener" class="com.cor.cep.listener.TemperatureMonitorEventListener" />
-
-	<bean id="xRayEventHandler" class="com.cor.cep.handler.TemperatureEventHandler"
-		scope="singleton" />
 
 </beans>

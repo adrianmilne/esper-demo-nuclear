@@ -15,6 +15,7 @@ public class StartDemo {
     /** Logger */
     private static Logger LOG = LoggerFactory.getLogger(StartDemo.class);
 
+    
     /**
      * Main method - start the Demo!
      */
