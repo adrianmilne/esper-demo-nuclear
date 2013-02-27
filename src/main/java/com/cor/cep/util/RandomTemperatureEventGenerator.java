@@ -1,5 +1,6 @@
 package com.cor.cep.util;
 
+import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -41,7 +42,7 @@ public class RandomTemperatureEventGenerator {
                 
                 int count = 0;
                 while (count < noOfTemperatureEvents) {
-                    TemperatureEvent ve = new TemperatureEvent(new Random().nextInt(500));
+                    TemperatureEvent ve = new TemperatureEvent(new Random().nextInt(500), new Date());
                     temperatureEventHandler.handle(ve);
                     count++;
                     try {

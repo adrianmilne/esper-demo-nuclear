@@ -37,10 +37,10 @@ public class CriticalEventSubscriber implements StatementSubscriber {
                 + "       measures A as temp1, B as temp2, C as temp3, D as temp4 "
                 + "       pattern (A B C D) " 
                 + "       define "
-                + "               A as A.value > " + CRITICAL_EVENT_THRESHOLD + ", "
-                + "               B as (A.value < B.value), "
-                + "               C as (B.value < C.value), "
-                + "               D as (C.value < D.value) and D.value > (A.value * " + CRITICAL_EVENT_MULTIPLIER + ")" + ")";
+                + "               A as A.temperature > " + CRITICAL_EVENT_THRESHOLD + ", "
+                + "               B as (A.temperature < B.temperature), "
+                + "               C as (B.temperature < C.temperature), "
+                + "               D as (C.temperature < D.temperature) and D.temperature > (A.temperature * " + CRITICAL_EVENT_MULTIPLIER + ")" + ")";
         
         return crtiticalEventExpression;
     }

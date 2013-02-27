@@ -21,7 +21,7 @@ public class MonitorEventSubscriber implements StatementSubscriber {
     public String getStatement() {
 
         // Example of simple EPL with a Time Window
-        return "select avg(value) as avg_val from TemperatureEvent.win:time_batch(5 sec)";
+        return "select avg(temperature) as avg_val from TemperatureEvent.win:time_batch(5 sec)";
     }
 
     /**

@@ -32,8 +32,8 @@ public class WarningEventSubscriber implements StatementSubscriber {
                 + "       measures A as temp1, B as temp2 "
                 + "       pattern (A B) " 
                 + "       define " 
-                + "               A as A.value > " + WARNING_EVENT_THRESHOLD + ", "
-                + "               B as B.value > " + WARNING_EVENT_THRESHOLD + ")";
+                + "               A as A.temperature > " + WARNING_EVENT_THRESHOLD + ", "
+                + "               B as B.temperature > " + WARNING_EVENT_THRESHOLD + ")";
         
         return warningEventExpression;
     }
