@@ -1,7 +1,12 @@
 corsoft-esper-demo
 ==================
 
-Blog write up available at http://corsoftlimited.blogspot.co.uk/2013/02/complex-event-processing-made-easy.html
+Blog write up available at:
+http://corsoftlimited.blogspot.co.uk/2013/02/complex-event-processing-made-easy.html
+
+Also featured on JavaLobby:
+http://java.dzone.com/articles/complex-event-processing-made
+
 
 Simple project that illustrates the use of the Esper Complex Event Processing Engine. Purposefully left Unit Tests out to reduce size of code.
 
