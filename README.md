@@ -1,3 +1,5 @@
+<img src="https://travis-ci.org/corsoft/esper-demo-nuclear.svg"/>
+
 corsoft-esper-demo
 ==================
 
