@@ -1,4 +1,4 @@
-<a href="https://travis-ci.org/corsoft/esper-demo-nuclear.svg"><img src="https://travis-ci.org/corsoft/esper-demo-nuclear.svg"/></a>
+<a href="https://travis-ci.org/corsoft/esper-demo-nuclear"><img src="https://travis-ci.org/corsoft/esper-demo-nuclear.svg"/></a>
 
 corsoft-esper-demo
 ==================
