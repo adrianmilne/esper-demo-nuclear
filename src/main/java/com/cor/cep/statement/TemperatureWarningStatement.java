@@ -6,9 +6,6 @@ import org.slf4j.LoggerFactory;
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPStatement;
 
-/**
- * This class creates 3 queries and subscribes actions that will be executed when queries match.
- */
 public class TemperatureWarningStatement {
     private static Logger LOG = LoggerFactory.getLogger(TemperatureWarningStatement.class);
 

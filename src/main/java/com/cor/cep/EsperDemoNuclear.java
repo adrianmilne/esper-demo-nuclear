@@ -31,10 +31,6 @@ public class EsperDemoNuclear {
         sb.append("\n************************************************************\n");
         LOG.debug(sb.toString());
 
-        LOG.debug("Configuring..");
-        Configuration config = new Configuration();
-        config.addEventTypeAutoName("com.cor.cep.event");
-
         long numTemperatureEvents = 1000;
         if (args.length != 1) {
             LOG.debug("No override of number of events detected - defaulting to " + numTemperatureEvents + " events.");
@@ -43,6 +39,8 @@ public class EsperDemoNuclear {
         }
 
         LOG.debug("Initializing the Complex Event Processing Service ..");
+        Configuration config = new Configuration();
+        config.addEventTypeAutoName("com.cor.cep.event");
         EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider(config);
 
         LOG.debug("Registering Event Processing statements and actions to be triggered on matching data");
