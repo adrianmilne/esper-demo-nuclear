@@ -3,47 +3,15 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.cor.cep</groupId>
 	<artifactId>corsoft-esper-demo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>corsoft-esper-demo</name>
 	<description>Simple demo of Complex Event Processing (CEP) using the ESPER libraries.</description>
 
 	<properties>
 		<esper-version>4.7.0</esper-version>
-		<spring-version>3.1.1.RELEASE</spring-version>
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${spring-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>${spring-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<version>${spring-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-asm</artifactId>
-			<version>${spring-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-expression</artifactId>
-			<version>${spring-version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esper</artifactId>
@@ -100,7 +68,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.cor.cep.StartDemo</mainClass>
+					<mainClass>com.cor.cep.EsperDemoNuclear</mainClass>
 					<includePluginDependencies>false</includePluginDependencies>
 					<arguments>
 						<argument>10000</argument>
