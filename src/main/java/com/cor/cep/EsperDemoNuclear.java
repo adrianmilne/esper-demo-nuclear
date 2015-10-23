@@ -4,11 +4,8 @@ import com.cor.cep.action.TemperatureCriticalAction;
 import com.cor.cep.action.TemperatureMonitorAction;
 import com.cor.cep.action.TemperatureWarningAction;
 import com.cor.cep.event.TemperatureEvent;
-import com.cor.cep.statement.TemperatureStatement;
-import com.espertech.esper.client.Configuration;
-import com.espertech.esper.client.EPServiceProvider;
-import com.espertech.esper.client.EPServiceProviderManager;
-import com.espertech.esper.client.EPStatement;
+import com.cor.cep.query.TemperatureQueries;
+import com.espertech.esper.client.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +25,7 @@ public class EsperDemoNuclear {
         sb.append("\n* PLEASE WAIT - TEMPERATURES ARE RANDOM SO MAY TAKE");
         sb.append("\n* A WHILE TO SEE WARNING AND CRITICAL EVENTS!");
         sb.append("\n************************************************************\n");
-        logger.debug(sb.toString());
+        System.out.println(sb.toString());
 
         long demoMaxEventCount = 1000;
         if (args.length != 1) {
@@ -40,26 +37,32 @@ public class EsperDemoNuclear {
         Configuration config = new Configuration();
         config.addEventTypeAutoName("com.cor.cep.event");
         EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider(config);
+        EPAdministrator epAdministrator = epService.getEPAdministrator();
+        EPRuntime epRuntime = epService.getEPRuntime();
 
         // Register event pattern queries in the CEP and actions to be triggered on a match
-        EPStatement ep = epService.getEPAdministrator().createEPL(TemperatureStatement.QUERY_CRITICAL_TEMPERATURE);
+        EPStatement ep = epAdministrator.createEPL(TemperatureQueries.QUERY_CRITICAL_TEMPERATURE);
         ep.setSubscriber(new TemperatureCriticalAction());
 
-        ep = epService.getEPAdministrator().createEPL(TemperatureStatement.QUERY_WARNING_TEMPERATURE);
+        ep = epAdministrator.createEPL(TemperatureQueries.QUERY_WARNING_TEMPERATURE);
         ep.setSubscriber(new TemperatureWarningAction());
 
-        ep = epService.getEPAdministrator().createEPL(TemperatureStatement.QUERY_TEMPERATURE_MONITOR);
+        ep = epAdministrator.createEPL(TemperatureQueries.QUERY_TEMPERATURE_MONITOR);
         ep.setSubscriber(new TemperatureMonitorAction());
 
         // create an event stream and send events to the CEP
         for (int count = 0; count < demoMaxEventCount; count++) {
-            TemperatureEvent temperatureEvent = new TemperatureEvent(new Random().nextInt(500), new Date());
+            // create a new temperature event
+            int temperature = new Random().nextInt(500);
+            Date timeOfReading = new Date();
+            TemperatureEvent temperatureEvent = new TemperatureEvent(temperature, timeOfReading);
+
             logger.debug(temperatureEvent.toString());
 
             // send event to the CEP [which also makes the CEP run all queries and trigger respective actions]
             // A time window [i.e. 10s or as defined] of all events is queried in the CEP and when event patterns
             // match any above query the CEP triggers its subscribed action
-            epService.getEPRuntime().sendEvent(temperatureEvent);
+            epRuntime.sendEvent(temperatureEvent);
 
             // This is not required. For illustration, add some delay (sleep)
             try {
@@ -69,6 +72,6 @@ public class EsperDemoNuclear {
             }
         }
 
-        logger.debug("Finished");
+        System.out.println("Finished");
     }
 }
