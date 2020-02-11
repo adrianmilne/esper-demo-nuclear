@@ -116,12 +116,12 @@
 		<repository>
 			<id>codehaus</id>
 			<name>Codehaus Release Repo</name>
-			<url>http://dist.codehaus.org/</url>
+			<url>https://dist.codehaus.org/</url>
 		</repository>
 		<repository>
 			<id>codehaus-snapshot</id>
 			<name>Codehaus Snapshot Repo</name>
-			<url>http://snapshots.repository.codehaus.org</url>
+			<url>https://snapshots.repository.codehaus.org</url>
 			<releases>
 				<enabled>false</enabled>
 			</releases>
@@ -132,12 +132,12 @@
 		<pluginRepository>
 			<id>codehaus</id>
 			<name>Codehaus Release Repo</name>
-			<url>http://repository.codehaus.org</url>
+			<url>https://repository.codehaus.org</url>
 		</pluginRepository>
 		<pluginRepository>
 			<id>codehaus-snapshot</id>
 			<name>Codehaus Snapshot Repo</name>
-			<url>http://snapshots.repository.codehaus.org</url>
+			<url>https://snapshots.repository.codehaus.org</url>
 		</pluginRepository>
 	</pluginRepositories>
 
