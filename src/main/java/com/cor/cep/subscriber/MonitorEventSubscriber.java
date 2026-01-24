@@ -37,6 +37,6 @@ public class MonitorEventSubscriber implements StatementSubscriber {
         sb.append("\n- [MONITOR] Average Temp = " + avg);
         sb.append("\n---------------------------------");
 
-        LOG.debug(sb.toString());
+        LOG.info(sb.toString());
     }
 }
