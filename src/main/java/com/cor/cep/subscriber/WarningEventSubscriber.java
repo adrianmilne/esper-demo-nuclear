@@ -53,6 +53,6 @@ public class WarningEventSubscriber implements StatementSubscriber {
         sb.append("\n- [WARNING] : TEMPERATURE SPIKE DETECTED = " + temp1 + "," + temp2);
         sb.append("\n--------------------------------------------------");
 
-        LOG.debug(sb.toString());
+        LOG.warn(sb.toString());
     }
 }

@@ -1,9 +1,10 @@
 package com.cor.cep.util;
 
 import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,25 +32,31 @@ public class RandomTemperatureEventGenerator {
     /**
      * Creates simple random Temperature events and lets the implementation class handle them.
      */
-    public void startSendingTemperatureReadings(final long noOfTemperatureEvents) {
+    public Future<?> startSendingTemperatureReadings(final long noOfTemperatureEvents) {
 
         ExecutorService xrayExecutor = Executors.newSingleThreadExecutor();
 
-        xrayExecutor.submit(new Runnable() {
+        return xrayExecutor.submit(new Runnable() {
             public void run() {
 
-                LOG.debug(getStartingMessage());
-                
-                int count = 0;
-                while (count < noOfTemperatureEvents) {
-                    TemperatureEvent ve = new TemperatureEvent(new Random().nextInt(500), new Date());
-                    temperatureEventHandler.handle(ve);
-                    count++;
-                    try {
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) {
-                        LOG.error("Thread Interrupted", e);
+                try {
+                    LOG.debug(getStartingMessage());
+
+                    int count = 0;
+                    while (count < noOfTemperatureEvents) {
+                        TemperatureEvent ve = new TemperatureEvent(ThreadLocalRandom.current().nextInt(500), new Date());
+                        temperatureEventHandler.handle(ve);
+                        count++;
+                        try {
+                            Thread.sleep(200);
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                            LOG.warn("Thread interrupted while generating temperature events.", e);
+                            break;
+                        }
                     }
+                } finally {
+                    xrayExecutor.shutdown();
                 }
 
             }

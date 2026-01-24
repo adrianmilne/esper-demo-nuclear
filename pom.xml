@@ -8,21 +8,14 @@
 	<description>Simple demo of Complex Event Processing (CEP) using the ESPER libraries.</description>
 
 	<properties>
+		<java.version>11</java.version>
 		<esper-version>4.7.0</esper-version>
-		<spring-version>3.1.1.RELEASE</spring-version>
+		<spring-version>5.3.34</spring-version>
+		<logback-version>1.2.13</logback-version>
+		<junit-version>5.10.2</junit-version>
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${spring-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>${spring-version}</version>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -34,53 +27,27 @@
 			<version>${spring-version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-asm</artifactId>
-			<version>${spring-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-expression</artifactId>
-			<version>${spring-version}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>com.espertech</groupId>
 			<artifactId>esper</artifactId>
 			<version>${esper-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging-api</artifactId>
-			<version>1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.antlr</groupId>
-			<artifactId>antlr</artifactId>
-			<version>3.4</version>
-		</dependency>
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib</artifactId>
-			<version>2.2</version>
 		</dependency>
 
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>0.9.28</version>
+			<version>${logback-version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
-			<version>0.9.28</version>
+			<version>${logback-version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8.1</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${junit-version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -90,15 +57,15 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>3.11.0</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<release>${java.version}</release>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.1.0</version>
 				<configuration>
 					<mainClass>com.cor.cep.StartDemo</mainClass>
 					<includePluginDependencies>false</includePluginDependencies>
@@ -107,38 +74,15 @@
 					</arguments>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.2.5</version>
+				<configuration>
+					<useModulePath>false</useModulePath>
+				</configuration>
+			</plugin>
 
 		</plugins>
 	</build>
-
-
-	<repositories>
-		<repository>
-			<id>codehaus</id>
-			<name>Codehaus Release Repo</name>
-			<url>http://dist.codehaus.org/</url>
-		</repository>
-		<repository>
-			<id>codehaus-snapshot</id>
-			<name>Codehaus Snapshot Repo</name>
-			<url>http://snapshots.repository.codehaus.org</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>codehaus</id>
-			<name>Codehaus Release Repo</name>
-			<url>http://repository.codehaus.org</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>codehaus-snapshot</id>
-			<name>Codehaus Snapshot Repo</name>
-			<url>http://snapshots.repository.codehaus.org</url>
-		</pluginRepository>
-	</pluginRepositories>
 
 </project>

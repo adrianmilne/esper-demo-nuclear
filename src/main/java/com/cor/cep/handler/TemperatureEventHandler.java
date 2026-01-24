@@ -2,6 +2,7 @@ package com.cor.cep.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,7 +22,7 @@ import com.espertech.esper.client.EPStatement;
  */
 @Component
 @Scope(value = "singleton")
-public class TemperatureEventHandler implements InitializingBean{
+public class TemperatureEventHandler implements InitializingBean, DisposableBean {
 
     /** Logger */
     private static Logger LOG = LoggerFactory.getLogger(TemperatureEventHandler.class);
@@ -49,7 +50,7 @@ public class TemperatureEventHandler implements InitializingBean{
      */
     public void initService() {
 
-        LOG.debug("Initializing Servcie ..");
+        LOG.debug("Initializing Service ..");
         Configuration config = new Configuration();
         config.addEventTypeAutoName("com.cor.cep.event");
         epService = EPServiceProviderManager.getDefaultProvider(config);
@@ -108,5 +109,21 @@ public class TemperatureEventHandler implements InitializingBean{
         
         LOG.debug("Configuring..");
         initService();
+    }
+
+    @Override
+    public void destroy() {
+        if (criticalEventStatement != null) {
+            criticalEventStatement.destroy();
+        }
+        if (warningEventStatement != null) {
+            warningEventStatement.destroy();
+        }
+        if (monitorEventStatement != null) {
+            monitorEventStatement.destroy();
+        }
+        if (epService != null) {
+            epService.destroy();
+        }
     }
 }

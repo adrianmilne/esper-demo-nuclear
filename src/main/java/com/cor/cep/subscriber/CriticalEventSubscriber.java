@@ -32,7 +32,7 @@ public class CriticalEventSubscriber implements StatementSubscriber {
     public String getStatement() {
         
         // Example using 'Match Recognise' syntax.
-        String crtiticalEventExpression = "select * from TemperatureEvent "
+        String criticalEventExpression = "select * from TemperatureEvent "
                 + "match_recognize ( "
                 + "       measures A as temp1, B as temp2, C as temp3, D as temp4 "
                 + "       pattern (A B C D) " 
@@ -42,7 +42,7 @@ public class CriticalEventSubscriber implements StatementSubscriber {
                 + "               C as (B.temperature < C.temperature), "
                 + "               D as (C.temperature < D.temperature) and D.temperature > (A.temperature * " + CRITICAL_EVENT_MULTIPLIER + ")" + ")";
         
-        return crtiticalEventExpression;
+        return criticalEventExpression;
     }
     
     /**
@@ -65,7 +65,7 @@ public class CriticalEventSubscriber implements StatementSubscriber {
         sb.append("\n* " + temp1 + " > " + temp2 + " > " + temp3 + " > " + temp4);
         sb.append("\n***************************************");
 
-        LOG.debug(sb.toString());
+        LOG.error(sb.toString());
     }
 
     
